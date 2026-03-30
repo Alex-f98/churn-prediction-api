@@ -1,8 +1,8 @@
-# 📊 Customer Churn Prediction System
+# Customer Churn Prediction System
 
 Sistema de predicción de churn de clientes construido con FastAPI, Streamlit y scikit-learn.
 
-## 🚀 Features
+## Features
 
 - **API REST** con FastAPI para predicciones en tiempo real
 - **Dashboard interactivo** con Streamlit para análisis visual
@@ -11,7 +11,7 @@ Sistema de predicción de churn de clientes construido con FastAPI, Streamlit y 
 - **Análisis de factores de riesgo** automáticos
 - **Historial de predicciones** persistente
 
-## 🏗️ Arquitectura
+## Arquitectura
 
 ```
 proyect/
@@ -32,7 +32,7 @@ proyect/
 └── tests/                 # Tests
 ```
 
-## 🛠️ Instalación
+## Instalación
 
 ### 1. Clonar el repositorio
 ```bash
@@ -53,7 +53,7 @@ venv\Scripts\activate     # Windows
 pip install -r requirements.txt
 ```
 
-## 🚀 Uso
+## Uso
 
 ### API FastAPI
 
@@ -74,14 +74,14 @@ streamlit run streamlit_app/app.py
 # Acceder: http://localhost:8501
 ```
 
-## 📊 Modelo
+## Modelo
 
 - **Algoritmo**: Gradient Boosting Classifier
 - **Métricas**: ROC-AUC: 0.84, F1-Score: 0.56
 - **Features**: 19 variables del dataset Telco Customer Churn
 - **Preprocesamiento**: StandardScaler + OneHotEncoder
 
-## 🔮 Predicción
+## Predicción
 
 ### Via API
 ```bash
@@ -118,13 +118,13 @@ curl -X POST "http://localhost:8000/predict" \
 }
 ```
 
-## 📈 Métricas de Riesgo
+## Métricas de Riesgo
 
-- **🟢 Bajo riesgo**: < 30% probabilidad
-- **🟡 Riesgo moderado**: 30-70% probabilidad  
-- **🔴 Alto riesgo**: > 70% probabilidad
+- **Bajo riesgo**: < 30% probabilidad
+- **Riesgo moderado**: 30-70% probabilidad  
+- **Alto riesgo**: > 70% probabilidad
 
-## 🔧 Desarrollo
+## Desarrollo
 
 ### Entrenar nuevo modelo
 ```bash
@@ -136,11 +136,11 @@ python src/train.py
 pytest tests/
 ```
 
-## 📝 Dataset
+## Dataset
 
 Usa el dataset [Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) de Kaggle.
 
-## 🤝 Contribuir
+## Contribuir
 
 1. Fork el proyecto
 2. Crear feature branch (`git checkout -b feature/amazing-feature`)
@@ -148,11 +148,11 @@ Usa el dataset [Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/
 4. Push al branch (`git push origin feature/amazing-feature`)
 5. Abrir Pull Request
 
-## 📄 Licencia
+## Licencia
 
 MIT License - ver archivo [LICENSE](LICENSE) para detalles.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Dataset proveído por [IBM Watson Analytics](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 - Construido con [FastAPI](https://fastapi.tiangolo.com/), [Streamlit](https://streamlit.io/) y [scikit-learn](https://scikit-learn.org/)
