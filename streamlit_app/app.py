@@ -32,7 +32,7 @@ st.title("📊 Customer Churn Prediction System")
 st.markdown("---")
 
 # Tabs
-tab1, tab2, tab3 = st.tabs(["🔮 Predicción", "📈 Análisis", "📋 Historial"])
+tab1, tab2, tab3 = st.tabs(["Predicción", "Análisis", "Historial"])
 
 with tab1:
     col1, col2 = st.columns([2, 1])
@@ -44,35 +44,35 @@ with tab1:
         with st.expander("👤 Información Básica", expanded=True):
             col_a, col_b = st.columns(2)
             with col_a:
-                gender = st.selectbox("Gender", ["Male", "Female"])
+                gender        = st.selectbox("Gender", ["Male", "Female"])
                 SeniorCitizen = st.selectbox("Senior Citizen", [0, 1], format_func=lambda x: "Sí" if x == 1 else "No")
             with col_b:
-                Partner = st.selectbox("Partner", ["Yes", "No"], format_func=lambda x: "Sí" if x == "Yes" else "No")
+                Partner    = st.selectbox("Partner", ["Yes", "No"], format_func=lambda x: "Sí" if x == "Yes" else "No")
                 Dependents = st.selectbox("Dependents", ["Yes", "No"], format_func=lambda x: "Sí" if x == "Yes" else "No")
         
         # Sección de Servicios
         with st.expander("📱 Servicios", expanded=True):
             col_a, col_b = st.columns(2)
             with col_a:
-                tenure = st.slider("Tenure (meses)", 0, 72, 12)
-                PhoneService = st.selectbox("Phone Service", ["Yes", "No"])
+                tenure        = st.slider("Tenure (meses)", 0, 72, 12)
+                PhoneService  = st.selectbox("Phone Service", ["Yes", "No"])
                 MultipleLines = st.selectbox("Multiple Lines", ["Yes", "No", "No phone service"])
             with col_b:
                 InternetService = st.selectbox("Internet Service", ["DSL", "Fiber optic", "No"])
-                Contract = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
+                Contract        = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
                 PaperlessBilling = st.selectbox("Paperless Billing", ["Yes", "No"])
         
         # Sección de Servicios Adicionales
         with st.expander("🔧 Servicios Adicionales"):
             col_a, col_b = st.columns(2)
             with col_a:
-                OnlineSecurity = st.selectbox("Online Security", ["Yes", "No", "No internet service"])
-                OnlineBackup = st.selectbox("Online Backup", ["Yes", "No", "No internet service"])
+                OnlineSecurity   = st.selectbox("Online Security", ["Yes", "No", "No internet service"])
+                OnlineBackup     = st.selectbox("Online Backup", ["Yes", "No", "No internet service"])
                 DeviceProtection = st.selectbox("Device Protection", ["Yes", "No", "No internet service"])
             with col_b:
-                TechSupport = st.selectbox("Tech Support", ["Yes", "No", "No internet service"])
-                StreamingTV = st.selectbox("Streaming TV", ["Yes", "No", "No internet service"])
-                StreamingMovies = st.selectbox("Streaming Movies", ["Yes", "No", "No internet service"])
+                TechSupport      = st.selectbox("Tech Support", ["Yes", "No", "No internet service"])
+                StreamingTV      = st.selectbox("Streaming TV", ["Yes", "No", "No internet service"])
+                StreamingMovies  = st.selectbox("Streaming Movies", ["Yes", "No", "No internet service"])
         
         # Sección de Pagos
         with st.expander("💳 Información de Pago", expanded=True):
@@ -92,31 +92,31 @@ with tab1:
                 TotalCharges = st.number_input("Total Charges ($)", min_value=0.0, value=800.0, step=0.01)
     
     with col2:
-        st.markdown("### 🎯 Predicción")
+        st.markdown("### Predicción")
         
         # Botón de predicción
         if st.button("🔮 Predecir Churn", type="primary", use_container_width=True):
             with st.spinner("Analizando datos..."):
                 payload = {
-                    "gender": gender,
-                    "SeniorCitizen": SeniorCitizen,
-                    "Partner": Partner,
-                    "Dependents": Dependents,
-                    "tenure": tenure,
-                    "PhoneService": PhoneService,
-                    "MultipleLines": MultipleLines,
-                    "InternetService": InternetService,
-                    "OnlineSecurity": OnlineSecurity,
-                    "OnlineBackup": OnlineBackup,
+                    "gender":           gender,
+                    "SeniorCitizen":    SeniorCitizen,
+                    "Partner":          Partner,
+                    "Dependents":       Dependents,
+                    "tenure":           tenure,
+                    "PhoneService":     PhoneService,
+                    "MultipleLines":    MultipleLines,
+                    "InternetService":  InternetService,
+                    "OnlineSecurity":   OnlineSecurity,
+                    "OnlineBackup":     OnlineBackup,
                     "DeviceProtection": DeviceProtection,
-                    "TechSupport": TechSupport,
-                    "StreamingTV": StreamingTV,
-                    "StreamingMovies": StreamingMovies,
-                    "Contract": Contract,
+                    "TechSupport":      TechSupport,
+                    "StreamingTV":      StreamingTV,
+                    "StreamingMovies":  StreamingMovies,
+                    "Contract":         Contract,
                     "PaperlessBilling": PaperlessBilling,
-                    "PaymentMethod": PaymentMethod,
-                    "MonthlyCharges": MonthlyCharges,
-                    "TotalCharges": TotalCharges
+                    "PaymentMethod":    PaymentMethod,
+                    "MonthlyCharges":   MonthlyCharges,
+                    "TotalCharges":     TotalCharges
                 }
                 
                 try:
@@ -127,6 +127,17 @@ with tab1:
                     if response.status_code == 200:
                         result = response.json()
                         proba = result["churn_probability"]
+                        
+                        # Guardar en historial
+                        prediction_record = {
+                            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                            "probability": f"{proba:.2%}",
+                            "risk_level": "Alto" if proba > 0.7 else "Medio" if proba > 0.3 else "Bajo",
+                            "contract": Contract,
+                            "monthly_charges": f"${MonthlyCharges:.2f}",
+                            "tenure": f"{tenure} meses"
+                        }
+                        st.session_state.prediction_history.append(prediction_record)
                         
                         # Visualización del resultado
                         fig = go.Figure(go.Indicator(
@@ -185,11 +196,11 @@ with tab1:
         
         # Resumen de datos
         info_data = {
-            "Antigüedad": f"{tenure} meses",
-            "Cargo Mensual": f"${MonthlyCharges:.2f}",
-            "Cargo Total": f"${TotalCharges:.2f}",
+            "Antigüedad":       f"{tenure} meses",
+            "Cargo Mensual":    f"${MonthlyCharges:.2f}",
+            "Cargo Total":      f"${TotalCharges:.2f}",
             "Servicio Internet": InternetService,
-            "Tipo Contrato": Contract
+            "Tipo Contrato":    Contract
         }
         
         for key, value in info_data.items():
@@ -233,4 +244,4 @@ with tab3:
 
 # Footer
 st.markdown("---")
-st.markdown("🤖 Desarrollado con Streamlit + FastAPI + scikit-learn")
+st.markdown("Desarrollado con Streamlit + FastAPI + scikit-learn")
