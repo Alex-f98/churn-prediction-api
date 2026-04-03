@@ -4,8 +4,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import time
 
-API_URL = "http://127.0.0.1:8000/predict"
-HEALTH_URL = "http://127.0.0.1:8000/health"
+
+API_BASE_URL = "https://churn-prediction-api-production.up.railway.app"
+API_URL      = f"{API_BASE_URL}/predict"
+HEALTH_URL   = f"{API_BASE_URL}/health"
 
 st.set_page_config(
     page_title="Churn Predictor", 
