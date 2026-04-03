@@ -1,5 +1,5 @@
 # Data manipulation
-pandas==2.2.2
+pandas==3.0.2
 numpy==1.26.4
 
 # Machine Learning
