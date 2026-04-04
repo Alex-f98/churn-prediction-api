@@ -26,9 +26,10 @@ import traceback
 
 class Predictor:
     def __init__(self, model_path="models/model_v1.pkl"):
-        artifact = joblib.load(model_path)
-        self.model = artifact["model"]
+        artifact     = joblib.load(model_path)
+        self.model   = artifact["model"]
         self.version = artifact["version"]
+        self.request_count = 0
         
         # Debug: ver las categorías que el modelo espera
         logger.info("=== Modelo cargado ===")
@@ -57,7 +58,7 @@ class Predictor:
 
             latency = time.time() - start
             logger.info(f"Prediction: {proba:.4f} | latency: {latency:.4f}s")
-            
+            self.request_count += 1
             return {
                 "churn_probability": float(proba),
                 "model_version": self.version

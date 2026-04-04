@@ -14,7 +14,7 @@ from sklearn.ensemble import  GradientBoostingClassifier
 
 
 
-MODEL_PATH = "proyect/models/model_v1.pkl"
+MODEL_PATH = "models/model_v1.pkl"
 
 def load_data(path):
     df = pd.read_csv(path)
@@ -41,8 +41,8 @@ def build_pipeline(num_cols, cat_cols):
     return model
 
 def main():
-    # df = load_data("../data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
-    df = load_data("proyect/data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+    df = load_data("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+    #df = load_data("proyect/data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
     y = df["Churn"].map({"Yes": 1, "No": 0})
     X = df.drop(columns=["Churn", "customerID"], errors="ignore")
