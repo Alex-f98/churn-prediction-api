@@ -3,32 +3,21 @@ import pandas as pd
 
 import time
 from app.logger import logger
-
-#class Predictor:
-#    def __init__(self, model_path="models/model_v1.pkl"):
-#        artifact     = joblib.load(model_path) #como picke pero mejor,  preserva n_jobs (esto es todo el pipeline)
-#        self.model   = artifact["model"]
-#        self.version = artifact["version"]
-#
-#    def predict(self, data: dict):
-#        df          = pd.DataFrame([data])
-#        df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
-#        proba       = self.model.predict_proba(df)[0, 1]
-#
-#        return {
-#            "churn_probability": float(proba), 
-#            "model_version": self.version
-#        }
+import mlflow
 
 import joblib
 import pandas as pd
 import traceback
 
 class Predictor:
-    def __init__(self, model_path="models/model_v1.pkl"):
-        artifact     = joblib.load(model_path)
-        self.model   = artifact["model"]
-        self.version = artifact["version"]
+    def __init__(self, model_path="models/model_v1.pkl", MODEL_URI = None):
+        if MODEL_URI:
+            self.model = mlflow.sklearn.load_model(MODEL_URI)
+            self.version = "mlflow"
+        else:
+            artifact     = joblib.load(model_path)
+            self.model   = artifact["model"]
+            self.version = artifact["version"]
         self.request_count = 0
         
         # Debug: ver las categorías que el modelo espera

@@ -1,0 +1,23 @@
+FROM python:3.10-slim
+
+WORKDIR /mlflow_app
+
+# Instalar MLflow y dependencias
+RUN pip install --no-cache-dir mlflow pandas scikit-learn
+
+# Crear directorios para MLflow
+RUN mkdir -p /mlflow_app/mlruns /mlflow_app/mlartifacts
+
+# Exponer puerto
+EXPOSE 5000
+
+# Comando para iniciar MLflow server con configuración de seguridad correcta
+CMD ["mlflow", "server", \
+     "--host", "0.0.0.0", \
+     "--port", "5000", \
+     "--backend-store-uri", "sqlite:////mlflow_app/mlflow.db", \
+     "--default-artifact-root", "file:///mlflow_app/mlruns", \
+     "--serve-artifacts", \
+     "--cors-allowed-origins", "*",\
+     "--allowed-hosts", "*"]
+     #"--allowed-hosts", "localhost,mlflow,127.0.0.1"]

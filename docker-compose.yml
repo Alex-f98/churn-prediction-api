@@ -9,6 +9,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    #depends_on:
+    #  - mlflow
 
   ui:
     build:
@@ -20,3 +22,19 @@ services:
       - api
     environment:
       - API_BASE_URL=http://api:8000
+
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.mlflow
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlruns:/mlflow_app/mlruns
+      - mlartifacts:/mlflow_app/mlartifacts
+
+volumes:
+  mlruns:
+  mlartifacts:

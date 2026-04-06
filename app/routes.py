@@ -5,7 +5,7 @@ from app.logger import logger
 
 
 router = APIRouter()
-predictor = Predictor()
+predictor = Predictor(model_path="models/model_v1.pkl") #MODEL_URI="models:/churn_prediction_model/1"
 
 @router.post("/predict")
 def predict(data: CustomerInput):
